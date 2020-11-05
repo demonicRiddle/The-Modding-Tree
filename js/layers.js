@@ -22,84 +22,111 @@ addLayer("w", {
         },
         row: 0, // Row the layer is in on the tree (0 is the first row)
         hotkeys: [
-            {key: "w", description: "Reset for wacky points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+            {key: "w", description: "W: Reset for wacky points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
         ],
         layerShown(){return true},
         upgrades: {
-            rows: 2,
-            cols: 6,
+            rows: 5,
+            cols: 3,
             11: {
                 title: "Begin Wackiness",
                 description: "Gain 1 Point per second.",
                 cost: new Decimal(1),
                 unlocked() { return player[this.layer].unlocked }, // The upgrade is only visible when this is true
             },
-            12: {
+            21: {
                 title: "One Hundredth",
                 description: "Gain one hundredth of a point for every wacky point.",
-                cost: new Decimal(2),
+                cost: new Decimal(1),
                 effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
                     let ret = player[this.layer].points.times(0.01)
+                    if (hasUpgrade(this.layer, 42)) ret = ret.pow(2)
+                    if (ret.gte("5000")) ret = ret.sqrt().times("10")
+                    if (ret.gte("1e8")) ret = ret.sqrt().times("100")
                     return ret;
                 },
                 unlocked() { return (hasUpgrade(this.layer, 11))},
                 effectDisplay() { return "+"+format(this.effect()) },
             },
-            13: {
+            22: {
                 title: "Two Hundredths",
                 description: "Gain two hundredths of a point for every wacky point.",
-                cost: new Decimal(3),
+                cost: new Decimal(2),
                 effect() {
                     let ret = player[this.layer].points.times(0.02)
+                    if (hasUpgrade(this.layer, 42)) ret = ret.pow(2)
+                    if (ret.gte("1000")) ret = ret.sqrt().times("10")
+                    if (ret.gte("1e8")) ret = ret.sqrt().times("100")
                     return ret;
                 },
-                unlocked() { return (hasUpgrade(this.layer, 12))},
+                unlocked() { return (hasUpgrade(this.layer, 21))},
                 effectDisplay() { return "+"+format(this.effect()) },
             },
-            14: {
+            31: {
                 title: "Three Hundredths",
                 description: "Gain three hundredths of a point for every wacky point.",
-                cost: new Decimal(4),
+                cost: new Decimal(3),
                 effect() {
                     let ret = player[this.layer].points.times(0.03)
+                    if (hasUpgrade(this.layer, 51)) ret = ret.pow(2)
+                    if (ret.gte("50000")) ret = ret.sqrt().times("10")
+                    if (ret.gte("1e8")) ret = ret.sqrt().times("100")
                     return ret;
                 },
-                unlocked() { return (hasUpgrade(this.layer, 13))},
+                unlocked() { return (hasUpgrade(this.layer, 22))},
                 effectDisplay() { return "+"+format(this.effect()) },
             },
-            15: {
+            32: {
                 title: "Four Hundredths",
                 description: "Gain four hundredths of a point for every wacky point.",
-                cost: new Decimal(5),
+                cost: new Decimal(4),
                 effect() {
                     let ret = player[this.layer].points.times(0.04)
+                    if (hasUpgrade(this.layer, 51)) ret = ret.pow(2)
+                    if (ret.gte("100000")) ret = ret.sqrt().times("10")
+                    if (ret.gte("1e8")) ret = ret.sqrt().times("100")
                     return ret;
                 },
-                unlocked() { return (hasUpgrade(this.layer, 14))},
+                unlocked() { return (hasUpgrade(this.layer, 31))},
                 effectDisplay() { return "+"+format(this.effect()) },
             },
-            16: {
+            33: {
                 title: "Five Hundredths",
                 description: "Gain five hundredths of a point for every wacky point.",
-                cost: new Decimal(6),
+                cost: new Decimal(5),
                 effect() {
                     let ret = player[this.layer].points.times(0.05)
+                    if (hasUpgrade(this.layer, 51)) ret = ret.pow(2)
+                    if (ret.gte("50000")) ret = ret.sqrt().times("10")
+                    if (ret.gte("1e8")) ret = ret.sqrt().times("100")
                     return ret;
                 },
-                unlocked() { return (hasUpgrade(this.layer, 15))},
+                unlocked() { return (hasUpgrade(this.layer, 32))},
                 effectDisplay() { return "+"+format(this.effect()) },
             },
-            21: {
-                title: "Self Boosting",
-                description: "Points boost themselves at a reduced amount.",
+            41: {
+                title: "Wacky Boosting",
+                description: "Wacky points multiply point gain.",
                 cost: new Decimal(20),
                 effect() {
-                    let ret = player.points.times(1).sqrt(-1)
-                    if (ret.gte("10")) ret = ret.sqrt().times("0.5")
+                    let ret = player.w.points.plus(1).times(1)
+                    if (ret.gte("100")) ret = ret.sqrt().times("0.8")
                     return ret;
                 },
-                unlocked() { return (hasUpgrade(this.layer, 16))},
+                unlocked() { return (hasUpgrade(this.layer, 33))},
                 effectDisplay() { return +format(this.effect())+"x" },
+            },
+            42: {
+                title: "Squares!",
+                description: "Square the second row.",
+                cost: new Decimal(10000),
+                unlocked() { return (hasUpgrade(this.layer, 41))},
+            },
+            51: {
+                title: "More of them!",
+                description: "Square the third row.",
+                cost: new Decimal(1e6),
+                unlocked() { return (hasUpgrade(this.layer, 42))},
             },
         }
     }

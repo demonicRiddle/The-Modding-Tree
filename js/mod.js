@@ -6,14 +6,14 @@ let modInfo = {
 	discordName: "",
 	discordLink: "",
 	changelogLink: "https://github.com/Acamaeda/The-Modding-Tree/blob/master/changelog.md",
-    offlineLimit: 6,  // In hours
+    offlineLimit: 1,  // In hours
     initialStartPoints: new Decimal (10) // Used for hard resets and new players
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0.2",
-	name: "Getting there?",
+	num: "0.1",
+	name: "Wacky Points!",
 }
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
@@ -35,12 +35,12 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(1)
-	if (hasUpgrade("w", 12)) gain = gain.add(upgradeEffect("w", 12))
-	if (hasUpgrade("w", 13)) gain = gain.add(upgradeEffect("w", 13))
-	if (hasUpgrade("w", 14)) gain = gain.add(upgradeEffect("w", 14))
-	if (hasUpgrade("w", 15)) gain = gain.add(upgradeEffect("w", 15))
-	if (hasUpgrade("w", 16)) gain = gain.add(upgradeEffect("w", 16))
 	if (hasUpgrade("w", 21)) gain = gain.add(upgradeEffect("w", 21))
+	if (hasUpgrade("w", 22)) gain = gain.add(upgradeEffect("w", 22))
+	if (hasUpgrade("w", 31)) gain = gain.add(upgradeEffect("w", 31))
+	if (hasUpgrade("w", 32)) gain = gain.add(upgradeEffect("w", 32))
+	if (hasUpgrade("w", 33)) gain = gain.add(upgradeEffect("w", 33))
+	if (hasUpgrade("w", 41)) gain = gain.add(upgradeEffect("w", 41))
 	return gain
 }
 
