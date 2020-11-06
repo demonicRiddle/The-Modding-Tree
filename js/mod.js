@@ -12,8 +12,8 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.1",
-	name: "Wacky Points!",
+	num: "0.11",
+	name: "Replicators!",
 }
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
@@ -41,6 +41,7 @@ function getPointGen() {
 	if (hasUpgrade("w", 32)) gain = gain.add(upgradeEffect("w", 32))
 	if (hasUpgrade("w", 33)) gain = gain.add(upgradeEffect("w", 33))
 	if (hasUpgrade("w", 41)) gain = gain.add(upgradeEffect("w", 41))
+	gain = gain.times(layers.r.effect())
 	return gain
 }
 
