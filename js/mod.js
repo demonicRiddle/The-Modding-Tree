@@ -1,19 +1,19 @@
 let modInfo = {
-	name: "The Wacky Tree",
-	id: "WackyTree",
+	name: "The Alphabet Tree",
+	id: "AlphabetTree",
 	author: "demonicRiddle",
-	pointsName: "points",
+	pointsName: "letters",
 	discordName: "",
 	discordLink: "",
-	changelogLink: "https://github.com/Acamaeda/The-Modding-Tree/blob/master/changelog.md",
+	changelogLink: "https://github.com/demonicRiddle/The-Modding-Tree/blob/master/changelog.md",
     offlineLimit: 1,  // In hours
     initialStartPoints: new Decimal (10) // Used for hard resets and new players
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.11",
-	name: "Replicators!",
+	num: "0.1",
+	name: "Wacky Tree? Never heard of it.",
 }
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
@@ -26,7 +26,7 @@ function getStartPoints(){
 
 // Determines if it should show points/sec
 function canGenPoints(){
-	return hasUpgrade("w", 11)
+	return hasUpgrade("a", 11)
 }
 
 // Calculate points/sec!
@@ -35,13 +35,9 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(1)
-	if (hasUpgrade("w", 21)) gain = gain.add(upgradeEffect("w", 21))
-	if (hasUpgrade("w", 22)) gain = gain.add(upgradeEffect("w", 22))
-	if (hasUpgrade("w", 31)) gain = gain.add(upgradeEffect("w", 31))
-	if (hasUpgrade("w", 32)) gain = gain.add(upgradeEffect("w", 32))
-	if (hasUpgrade("w", 33)) gain = gain.add(upgradeEffect("w", 33))
-	if (hasUpgrade("w", 41)) gain = gain.add(upgradeEffect("w", 41))
-	gain = gain.times(layers.r.effect())
+	if (hasUpgrade("a", 12)) gain = gain.times(upgradeEffect("a", 12))
+	if (hasUpgrade("a", 21)) gain = gain.times(upgradeEffect("a", 21))
+	gain = gain.times(layers.b.effect())
 	return gain
 }
 
